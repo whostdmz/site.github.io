@@ -1,11 +1,11 @@
 :root {
-  --theme: 0;
-  --theme-color: hsl(190, 45%, calc(70% * (1 - var(--theme)) + 35% * var(--theme)));
+  --theme: 1;
+  --theme-color: hsl(84, 28%, calc(38% * (1 - var(--theme)) + 40% * var(--theme)));
   --theme-color-contrast: hsl(from var(--theme-color) h s calc(100 - l));
-  --theme-text-color: hsl(from var(--theme-color) h 0% calc(l * (1 - var(--theme)) + (100 - l) * var(--theme)));
-  --theme-background: hsl(from var(--theme-color) h s calc(3 * (1 - var(--theme)) + 96 * var(--theme)));
+  --theme-text-color: hsl(from var(--theme-color) h 8% calc(88% * (1 - var(--theme)) + 22% * var(--theme)));
+  --theme-background: hsl(from var(--theme-color) h calc(s * 0.6) calc(6 * (1 - var(--theme)) + 95 * var(--theme)));
   --theme-surface: hsl(from var(--theme-color) h s l / 0.1);
-  --muted: hsl(from var(--theme-color) h 10% calc(50% * (1 - var(--theme)) + 60% * var(--theme)));
+  --muted: hsl(from var(--theme-color) h 12% calc(48% * (1 - var(--theme)) + 42% * var(--theme)));
 }
 
 @font-face {
@@ -31,7 +31,7 @@ body {
   min-height: 100vh;
 }
 
-/* Header with logo and nav */
+/* logo et nav */
 header {
   position: fixed;
   top: 0;
@@ -84,7 +84,7 @@ nav a:hover {
   color: var(--theme-color);
 }
 
-/* Hamburger menu (hidden on desktop) */
+/* Hamburger menu (pour mobile) */
 .menu-toggle {
   display: none;
   flex-direction: column;
@@ -115,7 +115,7 @@ nav a:hover {
   transform: rotate(-45deg) translate(7px, -7px);
 }
 
-/* Main content - PAGE ACCUEIL */
+/* ACCUEIL */
 main {
   width: 100%;
   min-height: 100vh;
