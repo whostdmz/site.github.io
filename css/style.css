@@ -9,35 +9,35 @@
    ========================================================= */
 
 :root {
-  --theme-background: #EAE6D4;
-  --theme-background-soft: #DEDABF;
+  /* Fond neutre chaud, sombre — le kaki devient un accent, pas la couleur de tout */
+  --theme-background: #2A2924;
+  --theme-background-soft: #33322A;
 
-  --theme-color: #4B5636;
-  --theme-color-dark: #313A21;
-  --theme-color-light: #7C8A5C;
+  /* Accent — sauge un peu plus discrète, moins "salade" */
+  --theme-color: #A9B48F;
+  --theme-color-dark: #87926E;
+  --theme-color-light: #C7D0AF;
 
-  --theme-text-color: #1D2015;
-  --muted: #5A5D4C;
+  --theme-text-color: #E9E5D5;
+  --muted: #9C9C87;
 
-  --theme-surface: rgba(75, 86, 54, 0.12);
-  --theme-surface-strong: rgba(75, 86, 54, 0.22);
+  --theme-surface: rgba(224, 224, 200, 0.07);
+  --theme-surface-strong: rgba(224, 224, 200, 0.14);
 
-  --theme-border: rgba(49, 58, 33, 0.38);
-  --theme-border-light: rgba(49, 58, 33, 0.20);
+  --theme-border: rgba(224, 224, 200, 0.20);
+  --theme-border-light: rgba(224, 224, 200, 0.11);
 
-  --theme-header: rgba(234, 230, 212, 0.92);
+  /* Bark — encore un cran plus sombre, pour le cadre haut/bas */
+  --bark: #1D1C18;
+  --bark-soft: #262520;
+  --on-bark: #E9E5D5;
+  --on-bark-muted: rgba(233, 229, 213, 0.62);
+  --on-bark-border: rgba(233, 229, 213, 0.12);
 
-  /* Bark — brun-vert profond, utilisé pour les zones sombres (header/footer) */
-  --bark: #23261B;
-  --bark-soft: #2E3324;
-  --on-bark: #E9E4D2;
-  --on-bark-muted: rgba(233, 228, 210, 0.62);
-  --on-bark-border: rgba(233, 228, 210, 0.14);
-
-  /* Argile — accent chaud, terre cuite, utilisé avec parcimonie */
-  --clay: #B36A45;
-  --clay-dark: #8C4F30;
-  --clay-soft: rgba(179, 106, 69, 0.14);
+  /* Argile — accent chaud, pour les états actifs */
+  --clay: #D98B5D;
+  --clay-dark: #B36A45;
+  --clay-soft: rgba(217, 139, 93, 0.16);
 
   --radius-small: 4px;
   --radius-pill: 999px;
@@ -89,7 +89,7 @@ body::before {
 
   opacity: 0.05;
 
-  mix-blend-mode: multiply;
+  mix-blend-mode: overlay;
 
   background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='180' height='180'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
 }
@@ -437,7 +437,7 @@ main {
 
   text-decoration: none;
 
-  border-bottom: 1px solid rgba(75, 86, 54, 0.55);
+  border-bottom: 1px solid rgba(169, 180, 143, 0.5);
 
   transition:
     color 0.2s ease,
@@ -477,34 +477,17 @@ main {
 
   font-size: 0.78rem;
 
-  border: none;
-
-  transition: color 0.2s ease;
-}
-
-.social-links a::after {
-  content: "↗";
-
-  margin-left: 7px;
-
-  opacity: 0;
-
-  transform: translateX(-4px);
-
-  display: inline-block;
+  border-bottom: 1px solid transparent;
 
   transition:
-    opacity 0.2s ease,
-    transform 0.2s ease;
+    color 0.2s ease,
+    border-color 0.2s ease;
 }
 
 .social-links a:hover {
   color: var(--theme-color);
-}
 
-.social-links a:hover::after {
-  opacity: 1;
-  transform: translateX(0);
+  border-color: var(--theme-color);
 }
 
 
@@ -665,9 +648,9 @@ main.content-page {
 
   border: 1px solid var(--theme-border);
 
-  border-radius: var(--radius-pill);
+  border-radius: var(--radius-small);
 
-  padding: 7px 13px;
+  padding: 6px 12px;
 
   color: var(--muted);
 
@@ -679,26 +662,27 @@ main.content-page {
 
   transition:
     color 0.2s ease,
-    background 0.2s ease,
     border-color 0.2s ease;
 }
 
 .filter-tag-btn:hover {
   color: var(--theme-color-dark);
 
-  border-color: rgba(75, 86, 54, 0.55);
-
-  background: var(--theme-surface);
+  border-color: rgba(169, 180, 143, 0.5);
 }
 
 .filter-tag-btn.active {
-  background: var(--clay);
+  background: transparent;
 
   border-color: var(--clay);
 
-  color: var(--theme-background);
+  color: var(--clay);
 
   font-weight: normal;
+}
+
+.filter-tag-btn.active::before {
+  content: "› ";
 }
 
 .reset-btn {
@@ -740,22 +724,13 @@ main.content-page {
 
 .project-item {
   border: none;
+  border-top: 1px solid var(--theme-border-light);
 
   padding: 0;
-
-  background-image: radial-gradient(circle, var(--theme-border) 1px, transparent 1.3px);
-  background-position: top left;
-  background-size: 9px 1px;
-  background-repeat: repeat-x;
 }
 
 .project-item:last-child {
-  background-image:
-    radial-gradient(circle, var(--theme-border) 1px, transparent 1.3px),
-    radial-gradient(circle, var(--theme-border) 1px, transparent 1.3px);
-  background-position: top left, bottom left;
-  background-size: 9px 1px, 9px 1px;
-  background-repeat: repeat-x, repeat-x;
+  border-bottom: 1px solid var(--theme-border-light);
 }
 
 
@@ -793,32 +768,38 @@ main.content-page {
   flex: 1;
 
   min-width: 0;
+
+  display: grid;
+  grid-template-columns: 100px 1fr;
+  column-gap: 26px;
+  row-gap: 8px;
 }
 
 .project-date {
+  grid-column: 1;
+  grid-row: 1 / -1;
+
   display: block;
 
-  color: var(--theme-color);
+  color: var(--muted);
 
-  font-size: 0.66rem;
+  font-size: 0.7rem;
 
-  letter-spacing: 0.10em;
+  letter-spacing: 0.02em;
 
-  text-transform: uppercase;
-
-  margin-bottom: 10px;
+  white-space: normal;
 }
 
 .project-item h3 {
-  font-size: 1.45rem;
+  grid-column: 2;
+
+  font-size: 1.7rem;
 
   font-weight: normal;
 
-  line-height: 1.3;
+  line-height: 1.25;
 
   color: var(--theme-text-color);
-
-  margin-bottom: 9px;
 
   transition: color 0.2s ease;
 }
@@ -828,15 +809,15 @@ main.content-page {
 }
 
 .project-short-description {
-  max-width: 720px;
+  grid-column: 2;
+
+  max-width: 640px;
 
   color: var(--muted);
 
   font-size: 0.82rem;
 
   line-height: 1.75;
-
-  margin-bottom: 18px;
 }
 
 
@@ -847,21 +828,17 @@ main.content-page {
 .project-toggle {
   flex-shrink: 0;
 
-  width: 34px;
-  height: 34px;
+  align-self: flex-start;
 
-  display: flex;
+  margin-top: 6px;
 
-  align-items: center;
-  justify-content: center;
+  border: none;
 
-  border: 1px solid var(--theme-color);
-
-  border-radius: 50%;
+  background: none;
 
   color: var(--theme-color);
 
-  font-size: 1rem;
+  font-size: 1.3rem;
 
   font-weight: normal;
 
@@ -869,22 +846,17 @@ main.content-page {
 
   transition:
     transform 0.3s ease,
-    background 0.2s ease,
     color 0.2s ease;
 }
 
 .project-header:hover .project-toggle {
-  background: var(--theme-surface);
+  color: var(--theme-color-light);
 }
 
 .project-item.active .project-toggle {
   transform: rotate(45deg);
 
-  background: var(--clay);
-
-  border-color: var(--clay);
-
-  color: var(--theme-background);
+  color: var(--clay);
 }
 
 
@@ -893,11 +865,13 @@ main.content-page {
    ========================================================= */
 
 .project-item .tags {
+  grid-column: 2;
+
   display: flex;
 
   flex-wrap: wrap;
 
-  gap: 6px;
+  gap: 4px 14px;
 
   margin-bottom: 0;
 }
@@ -905,19 +879,29 @@ main.content-page {
 .project-item .tag {
   display: inline-block;
 
-  padding: 4px 9px;
+  padding: 0;
 
-  border: 1px solid rgba(75, 86, 54, 0.5);
+  border: none;
 
-  border-radius: var(--radius-pill);
+  border-radius: 0;
 
-  background: rgba(75, 86, 54, 0.1);
+  background: none;
 
   color: var(--theme-color-dark);
 
-  font-size: 0.62rem;
+  font-size: 0.68rem;
 
   line-height: 1.4;
+}
+
+.tag::before {
+  content: "[";
+  color: var(--muted);
+}
+
+.tag::after {
+  content: "]";
+  color: var(--muted);
 }
 
 
@@ -1068,27 +1052,25 @@ main.content-page {
 }
 
 .project-details .project-link a {
-  display: inline-flex;
-
-  align-items: center;
-
-  gap: 8px;
+  display: inline-block;
 
   color: var(--theme-color-dark);
 
   text-decoration: none;
 
+  border-bottom: 1px solid rgba(169, 180, 143, 0.4);
+
   font-size: 0.76rem;
 
   transition:
     color 0.2s ease,
-    gap 0.2s ease;
+    border-color 0.2s ease;
 }
 
 .project-details .project-link a:hover {
   color: var(--theme-color);
 
-  gap: 13px;
+  border-color: var(--theme-color);
 }
 
 
@@ -1120,41 +1102,53 @@ main.content-page {
 }
 
 .contact-section {
-  padding: 30px 0;
+  display: grid;
+  grid-template-columns: 160px 1fr;
+  column-gap: 32px;
+  row-gap: 14px;
 
-  background-image: radial-gradient(circle, var(--theme-border) 1px, transparent 1.3px);
-  background-position: top left;
-  background-size: 9px 1px;
-  background-repeat: repeat-x;
+  padding: 32px 0;
+
+  border-top: 1px solid var(--theme-border-light);
+}
+
+.contact-section:first-child {
+  border-top: none;
+
+  padding-top: 0;
 }
 
 .contact-section:last-child {
-  background-image:
-    radial-gradient(circle, var(--theme-border) 1px, transparent 1.3px),
-    radial-gradient(circle, var(--theme-border) 1px, transparent 1.3px);
-  background-position: top left, bottom left;
-  background-size: 9px 1px, 9px 1px;
-  background-repeat: repeat-x, repeat-x;
+  border-bottom: 1px solid var(--theme-border-light);
+
+  padding-bottom: 32px;
 }
 
 .contact-section h3 {
-  font-size: 1.35rem;
+  grid-column: 1;
+  grid-row: 1 / -1;
+
+  align-self: start;
+
+  font-size: 0.85rem;
 
   font-weight: normal;
 
-  color: var(--theme-text-color);
+  color: var(--muted);
+}
 
-  margin-bottom: 15px;
+.contact-section > *:not(h3) {
+  grid-column: 2;
 }
 
 .contact-section p {
-  max-width: 720px;
+  max-width: 620px;
 
   font-size: 0.84rem;
 
   line-height: 1.9;
 
-  margin-bottom: 15px;
+  margin-bottom: 0;
 }
 
 .contact-section a {
@@ -1162,7 +1156,7 @@ main.content-page {
 
   text-decoration: none;
 
-  border-bottom: 1px solid rgba(75, 86, 54, 0.55);
+  border-bottom: 1px solid rgba(169, 180, 143, 0.5);
 
   transition:
     color 0.2s ease,
@@ -1193,7 +1187,7 @@ main.content-page {
 .social-links-vertical a {
   padding: 0;
 
-  border: none;
+  border-bottom: 1px solid transparent;
 
   color: var(--theme-color-dark);
 
@@ -1201,25 +1195,15 @@ main.content-page {
 
   text-decoration: none;
 
-  transition: color 0.2s ease;
-}
-
-.social-links-vertical a::after {
-  content: "↗";
-
-  margin-left: 7px;
-
-  transition: margin 0.2s ease;
+  transition:
+    color 0.2s ease,
+    border-color 0.2s ease;
 }
 
 .social-links-vertical a:hover {
-  background: transparent;
-
   color: var(--theme-color);
-}
 
-.social-links-vertical a:hover::after {
-  margin-left: 11px;
+  border-color: var(--theme-color);
 }
 
 
@@ -1298,7 +1282,7 @@ main.content-page {
 
   padding: 18px;
 
-  background: #DAD5BD;
+  background: var(--bark-soft);
 
   border-radius: var(--radius-small);
 
@@ -1330,7 +1314,7 @@ main.content-page {
   /* forme organique irrégulière plutôt qu'un cercle parfait */
   border-radius: 62% 38% 55% 45% / 48% 42% 58% 52%;
 
-  background: rgba(75, 86, 54, 0.10);
+  background: rgba(169, 180, 143, 0.12);
 
   filter: blur(75px);
 
@@ -1362,144 +1346,6 @@ main.content-page {
   #blob {
     animation: none;
   }
-}
-
-
-/* =========================================================
-   VEILLE
-   ========================================================= */
-
-.rss-controls {
-  display: flex;
-
-  align-items: center;
-
-  gap: 18px;
-
-  margin-bottom: 45px;
-}
-
-.refresh-btn {
-  appearance: none;
-
-  background: transparent;
-
-  color: var(--theme-color-dark);
-
-  border: 1px solid var(--theme-border);
-
-  border-radius: var(--radius-pill);
-
-  padding: 8px 14px;
-
-  font-family: "Space Mono", monospace;
-
-  font-size: 0.7rem;
-
-  cursor: pointer;
-
-  transition:
-    background 0.2s ease,
-    border-color 0.2s ease,
-    color 0.2s ease;
-}
-
-.refresh-btn:hover {
-  background: var(--theme-color);
-
-  border-color: var(--theme-color);
-
-  color: var(--theme-background);
-}
-
-.loading {
-  color: var(--muted);
-
-  font-size: 0.75rem;
-}
-
-
-/* =========================================================
-   VEILLE GRID
-   ========================================================= */
-
-.veille-grid {
-  display: grid;
-
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-
-  gap: 1px;
-
-  background: var(--theme-border);
-
-  border: 1px solid var(--theme-border);
-}
-
-.veille-item {
-  padding: 28px;
-
-  background: var(--theme-background-soft);
-
-  border: none;
-
-  border-radius: 0;
-
-  transition:
-    background 0.2s ease;
-}
-
-.veille-item:hover {
-  background: #D6D0B5;
-
-  transform: none;
-}
-
-.veille-item h3 {
-  font-size: 1.1rem;
-
-  font-weight: normal;
-
-  line-height: 1.45;
-
-  color: var(--theme-text-color);
-
-  margin-bottom: 12px;
-}
-
-.veille-item .date {
-  color: var(--theme-color);
-
-  font-size: 0.65rem;
-
-  letter-spacing: 0.08em;
-
-  text-transform: uppercase;
-
-  margin-bottom: 14px;
-}
-
-.veille-item p {
-  font-size: 0.8rem;
-
-  line-height: 1.8;
-
-  margin-bottom: 15px;
-}
-
-.veille-item a {
-  color: var(--theme-color-dark);
-
-  font-size: 0.74rem;
-
-  text-decoration: none;
-
-  transition: color 0.2s ease;
-}
-
-.veille-item a:hover {
-  color: var(--theme-color);
-
-  text-decoration: underline;
 }
 
 
@@ -1769,12 +1615,20 @@ footer {
     padding: 27px 0;
   }
 
+  .project-title {
+    display: block;
+  }
+
   .project-date {
-    font-size: 0.58rem;
+    display: block;
+
+    margin-bottom: 6px;
+
+    font-size: 0.62rem;
   }
 
   .project-item h3 {
-    font-size: 1.12rem;
+    font-size: 1.3rem;
 
     margin-bottom: 8px;
   }
@@ -1783,23 +1637,20 @@ footer {
     font-size: 0.72rem;
 
     line-height: 1.8;
+
+    margin-bottom: 12px;
   }
 
   .project-item .tags {
-    gap: 5px;
+    gap: 4px 10px;
   }
 
   .project-item .tag {
-    padding: 4px 8px;
-
-    font-size: 0.57rem;
+    font-size: 0.62rem;
   }
 
   .project-toggle {
-    width: 30px;
-    height: 30px;
-
-    font-size: 0.9rem;
+    font-size: 1.1rem;
   }
 
 
@@ -1846,11 +1697,15 @@ footer {
   /* ---------- CONTACT ---------- */
 
   .contact-section {
+    display: block;
+
     padding: 25px 0;
   }
 
   .contact-section h3 {
-    font-size: 1.15rem;
+    margin-bottom: 10px;
+
+    font-size: 0.8rem;
   }
 
   .contact-section p {
@@ -1873,35 +1728,6 @@ footer {
     padding: 14px;
 
     font-size: 0.58rem;
-  }
-
-
-  /* ---------- VEILLE ---------- */
-
-  .rss-controls {
-    flex-direction: column;
-
-    align-items: flex-start;
-
-    gap: 12px;
-
-    margin-bottom: 30px;
-  }
-
-  .veille-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .veille-item {
-    padding: 23px;
-  }
-
-  .veille-item h3 {
-    font-size: 1rem;
-  }
-
-  .veille-item p {
-    font-size: 0.72rem;
   }
 
 
