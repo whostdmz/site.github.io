@@ -78,19 +78,26 @@
       padding-bottom: 28px;
       border-bottom: 2px solid var(--theme-surface);
     }
+    /* Palette de catégories — tons de terre, chacun distinct mais cohérent */
+    .cat-btn[data-cat="Sécurité"]      { --cat-color: var(--clay); }
+    .cat-btn[data-cat="Reverse / Pwn"] { --cat-color: var(--bark-soft); }
+    .cat-btn[data-cat="Linux / Bash"]  { --cat-color: var(--theme-color); }
+    .cat-btn[data-cat="Dev / Java / C"]{ --cat-color: #9C7A2E; }
+    .cat-btn[data-cat="Actu Tech"]     { --cat-color: #56766A; }
+
     .cat-btn {
       background: transparent;
-      border: 1px solid var(--theme-color);
+      border: 1px solid var(--cat-color, var(--theme-color));
       border-radius: 6px;
       padding: 7px 16px;
       font-family: 'Space Mono', monospace;
       font-size: 0.88rem;
-      color: var(--theme-color);
+      color: var(--cat-color, var(--theme-color));
       cursor: pointer;
       transition: all 0.25s;
     }
-    .cat-btn:hover { background: var(--theme-surface); transform: translateY(-2px); }
-    .cat-btn.active { background: var(--theme-color); color: var(--theme-background); font-weight: bold; }
+    .cat-btn:hover { background: color-mix(in srgb, var(--cat-color, var(--theme-color)) 12%, transparent); transform: translateY(-2px); }
+    .cat-btn.active { background: var(--cat-color, var(--theme-color)); color: var(--theme-background); font-weight: bold; border-color: var(--cat-color, var(--theme-color)); }
 
     #fallback-banner {
       display: none;
@@ -141,9 +148,15 @@
 
     @keyframes fadeIn { to { opacity: 1; } }
 
+    .feed-entry[data-cat="Sécurité"]       { --cat-color: var(--clay); }
+    .feed-entry[data-cat="Reverse / Pwn"]  { --cat-color: var(--bark-soft); }
+    .feed-entry[data-cat="Linux / Bash"]   { --cat-color: var(--theme-color); }
+    .feed-entry[data-cat="Dev / Java / C"] { --cat-color: #9C7A2E; }
+    .feed-entry[data-cat="Actu Tech"]      { --cat-color: #56766A; }
+
     .entry-date {
       font-size: 0.78rem;
-      color: var(--theme-color);
+      color: var(--cat-color, var(--theme-color));
       white-space: nowrap;
       font-variant-numeric: tabular-nums;
     }
@@ -161,11 +174,11 @@
       line-height: 1.45;
       transition: color 0.2s;
     }
-    .entry-title a:hover { color: var(--theme-color); }
+    .entry-title a:hover { color: var(--cat-color, var(--theme-color)); }
     .entry-cat {
       font-size: 0.72rem;
-      border: 1px dashed var(--theme-color);
-      color: var(--theme-color);
+      border: 1px dashed var(--cat-color, var(--theme-color));
+      color: var(--cat-color, var(--theme-color));
       border-radius: 4px;
       padding: 2px 8px;
       white-space: nowrap;
@@ -207,7 +220,6 @@
 </head>
 <body>
   <div id="blob"></div>
-  <button id="theme-toggle" aria-label="Basculer le thème"></button>
 
   <header>
     <a href="../index.html">
